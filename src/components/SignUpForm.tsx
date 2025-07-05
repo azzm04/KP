@@ -108,13 +108,6 @@ Any disputes arising out of or relating to these terms of service shall be resol
           Sign In With Google
         </button>
       </div>
-
-      <p className="text-center text-sm text-gray-600 mt-4">
-        Already have an account?{" "}
-        <a href="#" className="text-cyan-600 underline">
-          Sign in
-        </a>
-      </p>
     </form>
   );
 }
