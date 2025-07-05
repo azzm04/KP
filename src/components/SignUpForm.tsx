@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Label } from "@/components/ui/label";
 
 type Props = {
   buttonClasses: string;
@@ -44,17 +45,47 @@ export default function SignUpForm({ buttonClasses, buttonForGFT }: Props) {
         <input type="checkbox" checked={agree} onChange={() => setAgree(!agree)} className="mt-1" />
         <span>
           I agree to the{" "}
-          <a href="#" className="text-cyan-600 underline">
+          <button
+            type="button"
+            className="text-cyan-600 underline cursor-pointer"
+            onClick={() =>
+              alert(
+                `User Responsibilities
+By using our website or app, you agree to comply with all applicable laws and regulations, and to not use our services for any unlawful or unauthorized purposes.
+
+Intellectual Property
+All content and materials on our website or app, including but not limited to text, graphics, logos, and software, are the property of Acme Inc and are protected by copyright, trademark, and other intellectual property laws.
+
+Dispute Resolution
+Any disputes arising out of or relating to these terms of service shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association.`,
+              )
+            }
+          >
             Terms of Service
-          </a>{" "}
+          </button>{" "}
           and{" "}
-          <a href="#" className="text-cyan-600 underline">
+          <button
+            type="button"
+            className="text-cyan-600 underline cursor-pointer"
+            onClick={() =>
+              alert(
+                `User Responsibilities
+By using our website or app, you agree to comply with all applicable laws and regulations, and to not use our services for any unlawful or unauthorized purposes.
+
+Intellectual Property
+All content and materials on our website or app, including but not limited to text, graphics, logos, and software, are the property of Acme Inc and are protected by copyright, trademark, and other intellectual property laws.
+
+Dispute Resolution
+Any disputes arising out of or relating to these terms of service shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association.`,
+              )
+            }
+          >
             Privacy Policy
-          </a>
+          </button>
         </span>
       </label>
 
-      <button type="submit" className="w-full py-3 rounded-lg bg-cyan-500 text-white font-medium">
+      <button type="submit" className="w-full py-3 rounded-lg bg-cyan-500 text-white font-medium ">
         Create Account
       </button>
 
