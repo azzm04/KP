@@ -18,10 +18,10 @@ export default async function HomePage() {
         <CardAction>Card Action</CardAction>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        Card Content
       </CardContent>
       <CardFooter>
-        <p>Card Footer</p>
+        Card Footer
       </CardFooter>
     </Card>
   );
