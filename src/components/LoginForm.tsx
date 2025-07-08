@@ -59,7 +59,7 @@ export default function LoginForm() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="Example@gmail.com"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
@@ -93,7 +93,7 @@ export default function LoginForm() {
 
           <div className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <a href="#" className="text-primary hover:underline">
+            <a href="/auth/register" className="text-primary hover:underline">
               Sign up
             </a>
           </div>

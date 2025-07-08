@@ -87,7 +87,7 @@ export default function RegistrationForm() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="Example@gmail.com"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
@@ -141,7 +141,7 @@ export default function RegistrationForm() {
 
           <div className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <a href="#" className="text-primary hover:underline">
+            <a href="/auth/login" className="text-primary hover:underline">
               Sign in
             </a>
           </div>

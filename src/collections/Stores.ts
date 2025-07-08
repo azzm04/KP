@@ -1,0 +1,44 @@
+import type { CollectionConfig } from "payload";
+
+export const Stores: CollectionConfig = {
+  slug: "stores",
+  admin: {
+    useAsTitle: "store_name",
+    defaultColumns: ["store_name", "owner", "createdAt"],
+  },
+  fields: [
+    {
+      name: "store_name",
+      label: "Store Name",
+      type: "text",
+      required: true,
+      unique: true,
+    },
+    {
+      name: "owner",
+      label: "Store Owner",
+      type: "relationship",
+      relationTo: "users", // Relasi ke koleksi Users
+      required: true,
+      // Filter untuk memastikan hanya user dengan role 'seller' yang bisa dipilih
+      filterOptions: {
+        role: {
+          equals: "seller",
+        },
+      },
+      admin: {
+        condition: ({ role }) => role === "seller",
+      },
+    },
+    {
+      name: "description",
+      type: "textarea",
+    },
+    {
+      name: "logo",
+      label: "Store Logo",
+      type: "upload", // Menggunakan koleksi media
+      relationTo: "media", // Relasi ke koleksi Media
+    },
+  ],
+};
