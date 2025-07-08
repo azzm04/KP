@@ -1,5 +1,5 @@
 import RegistrationForm from "@/components/RegistrationForm";
 
 export default async function HomePage() {
-  return <p>Home Page</p>;
+  return <RegistrationForm />;
 }
