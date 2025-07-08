@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { createUser } from "@/lib/actions/create-user";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   fullname: string;
@@ -24,6 +25,8 @@ interface SubmissionResult {
 }
 
 export default function RegistrationForm() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",
@@ -50,6 +53,8 @@ export default function RegistrationForm() {
     console.log(res);
 
     setIsSubmitting(false);
+
+    router.replace("/");
   };
 
   return (
