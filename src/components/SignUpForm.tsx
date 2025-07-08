@@ -10,7 +10,18 @@ type Props = {
 
 export default function SignUpForm({ buttonClasses, buttonForGFT }: Props) {
   const [agree, setAgree] = useState(false);
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agree) {
+      alert("You must agree to the terms and conditions to create an account.");
+      return;
+    }
+    // Handle form submission logic here
+    alert("Account created successfully!");
+  };
   return (
     <form className="w-full max-w-md space-y-4">
       <h2 className="text-2xl font-bold text-cyan-600 text-center">Create Account</h2>
@@ -21,24 +32,21 @@ export default function SignUpForm({ buttonClasses, buttonForGFT }: Props) {
         placeholder="Full name"
         className="w-full p-3 rounded-lg bg-teal-100 focus:outline-none"
         required
+        onChange={(e) => setFullName(e.target.value)}
       />
       <input
         type="email"
         placeholder="Email address"
         className="w-full p-3 rounded-lg bg-teal-100 focus:outline-none"
         required
+        onChange={(e) => setEmail(e.target.value)}
       />
       <input
         type="password"
         placeholder="Password"
         className="w-full p-3 rounded-lg bg-teal-100 focus:outline-none"
         required
-      />
-      <input
-        type="password"
-        placeholder="Confirm password"
-        className="w-full p-3 rounded-lg bg-teal-100 focus:outline-none"
-        required
+        onChange={(e) => setPassword(e.target.value)}
       />
 
       <label className="flex items-start text-sm gap-2">
@@ -85,7 +93,13 @@ Any disputes arising out of or relating to these terms of service shall be resol
         </span>
       </label>
 
-      <button type="submit" className="w-full py-3 rounded-lg bg-cyan-500 text-white font-medium ">
+      <button
+        onClick={() => {
+          console.log({ fullName, email, password, agree });
+        }}
+        type="submit"
+        className="w-full py-3 rounded-lg bg-cyan-500 text-white font-medium "
+      >
         Create Account
       </button>
 
