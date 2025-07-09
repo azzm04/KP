@@ -39,7 +39,7 @@ export default function LoginForm() {
 
     console.log(user);
 
-    router.replace("/");
+    window.location.href = "/";
   };
 
   return (
