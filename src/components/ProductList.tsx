@@ -10,6 +10,7 @@ const ProductList = ({ products }: ProductListProps) => {
     return (
       <ProductCard
         key={product.id}
+        id={product.id}
         name={product.name}
         stock={product.stock}
         currency="IDR"
