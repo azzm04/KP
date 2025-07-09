@@ -1,19 +1,25 @@
 import { LogoutUser } from "@/components/LogoutUser";
-import config from "@payload-config";
-import { headers as nextHeaders } from "next/headers";
-import { getPayload } from "payload";
+import { authorizeUser } from "@/lib/actions/authorize-user";
+import { redirect } from "next/navigation";
+import { auth } from "node_modules/payload/dist/auth/operations/auth";
 
 export default async function HomePage() {
-  const payload = await getPayload({ config });
+  const user = await authorizeUser();
 
-  const headers = await nextHeaders();
-
-  const result = await payload.auth({ headers, canSetHeaders: false });
-
-  return (
-    <div className="flex flex-col gap-1">
-      <p>Home</p>
-      {result.user && <LogoutUser user={result.user} />}
-    </div>
-  );
+  if (user) {
+    return (
+      <div className="flex flex-col gap-1">
+        <p>Welcome, {user.name}!</p>
+        {user && <LogoutUser user={user} />}
+      </div>
+    );
+  } else {
+    redirect("/auth/login");
+  }
 }
+
+/* 
+1. Buat fungsi untuk authorization
+2. Ketika di home & gada user, redirect ke login
+3. Ketika di login/register dan ada user, redirect ke home
+*/
