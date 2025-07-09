@@ -26,21 +26,32 @@ export default async function ProductDetailPage(props: { params: { id: string } 
   }
 
   return (
-    <div className="container mx-auto p-6 flex justify-center items-center min-h-screen ">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+    <div className="container mx-auto p-5 flex justify-center items-center min-h-screen">
+      <div className="max-w-2xl w-full bg-white rounded-lg shadow-md p-6">
         {product.images && typeof product.images === "object" && product.images.url && (
           <Image
             src={product.images.url}
             alt={product.images.alt || product.name}
             width={500}
             height={500}
-            className="rounded-lg mb-4"
+            className="rounded-lg mb-4 w-full object-cover"
           />
         )}
-        <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-        <div className="text-lg text-gray-700 mb-4">{renderRichText(product.description)}</div>
-        <div className="text-xl font-semibold mb-2">Rp{product.price?.toLocaleString("id-ID")}</div>
-        <div className="text-sm text-gray-500">Stock: {product.stock}</div>
+        <div className="flex flex-col md:flex-row md:items-start gap-6">
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
+            <div className="text-lg text-gray-700 mb-4">{renderRichText(product.description)}</div>
+            <div className="text-xl font-semibold mb-2">
+              Rp{product.price?.toLocaleString("id-ID")}
+            </div>
+            <div className="text-sm text-gray-500">Stock: {product.stock}</div>
+          </div>
+          <div className="md:self-start w-full md:w-auto">
+            <button className="bg-gray-500 text-white py-2 px-6 rounded-full w-full md:w-auto cursor-pointer hover:bg-gray-600 transition-colors duration-200">
+              Check Out
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

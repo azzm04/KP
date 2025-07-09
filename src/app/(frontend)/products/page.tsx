@@ -11,7 +11,7 @@ export default async function ProductsListPage() {
   });
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <h1 className="text-3xl font-bold mb-8 text-center">All Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.docs.map((product: any) => (
@@ -28,6 +28,7 @@ export default async function ProductsListPage() {
           </Link>
         ))}
       </div>
+      
     </div>
   );
 }
