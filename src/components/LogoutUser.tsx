@@ -12,9 +12,10 @@ export const LogoutUser = ({ user }: { user: User }) => {
     <>
       <p>{user.email}</p>
       <Button
+        className="cursor-pointer"
         onClick={async () => {
           await logoutUser();
-          router.replace("/");
+          router.replace("/auth/login");
         }}
       >
         Log Out

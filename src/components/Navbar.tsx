@@ -16,6 +16,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { LogoutUser } from "@/components/LogoutUser";
+import { User } from "@/payload-types";
 import { JSX } from "react";
 
 interface MenuItem {
@@ -48,6 +50,7 @@ interface Navbar1Props {
       url: string;
     };
   };
+  user?: User | null;
 }
 
 const Navbar = ({
@@ -138,6 +141,7 @@ const Navbar = ({
     login: { text: "Log in", url: "#" },
     signup: { text: "Sign up", url: "#" },
   },
+  user,
 }: Navbar1Props) => {
   return (
     <section className="py-4 flex justify-center">
@@ -155,12 +159,18 @@ const Navbar = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.text}</a>
-            </Button>
-            <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.text}</a>
-            </Button>
+            {user ? (
+              <LogoutUser user={user} />
+            ) : (
+              <>
+                <Button asChild variant="outline" size="sm">
+                  <a href={auth.login.url}>{auth.login.text}</a>
+                </Button>
+                <Button asChild size="sm">
+                  <a href={auth.signup.url}>{auth.signup.text}</a>
+                </Button>
+              </>
+            )}
           </div>
         </nav>
         <div className="block lg:hidden">
@@ -202,12 +212,18 @@ const Navbar = ({
                     </div>
                   </div>
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.text}</a>
-                    </Button>
-                    <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.text}</a>
-                    </Button>
+                    {user ? (
+                      <LogoutUser user={user} />
+                    ) : (
+                      <>
+                        <Button asChild variant="outline">
+                          <a href={auth.login.url}>{auth.login.text}</a>
+                        </Button>
+                        <Button asChild>
+                          <a href={auth.signup.url}>{auth.signup.text}</a>
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </SheetContent>

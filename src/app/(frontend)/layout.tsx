@@ -2,6 +2,7 @@ import React from "react";
 import "../../styles/globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Book, Sunset, Trees, Zap } from "lucide-react";
+import { authorizeUser } from "@/lib/actions/authorize-user";
 
 const demoData = {
   logo: {
@@ -98,11 +99,12 @@ const demoData = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
+  const user = await authorizeUser();
 
   return (
     <html lang="en">
       <body>
-        <Navbar {...demoData} />
+        <Navbar {...demoData} user={user} />
         <main>{children}</main>
       </body>
     </html>
