@@ -77,7 +77,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    stores: {
+      products: 'products';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -175,9 +179,13 @@ export interface Media {
 export interface Store {
   id: string;
   store_name: string;
-  owner?: (string | null) | User;
+  owner: string | User;
   description?: string | null;
-  logo?: (string | null) | Media;
+  products: {
+    docs?: (string | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -209,8 +217,8 @@ export interface Product {
   price: number;
   stock: number;
   category?: string | null;
-  images?: (string | Media)[] | null;
   store: string | Store;
+  images: string | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -382,7 +390,7 @@ export interface StoresSelect<T extends boolean = true> {
   store_name?: T;
   owner?: T;
   description?: T;
-  logo?: T;
+  products?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -396,8 +404,8 @@ export interface ProductsSelect<T extends boolean = true> {
   price?: T;
   stock?: T;
   category?: T;
-  images?: T;
   store?: T;
+  images?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -26,19 +26,17 @@ export const Stores: CollectionConfig = {
           equals: "seller",
         },
       },
-      admin: {
-        condition: ({ role }) => role === "seller",
-      },
     },
     {
       name: "description",
       type: "textarea",
     },
     {
-      name: "logo",
-      label: "Store Logo",
-      type: "upload", // Menggunakan koleksi media
-      relationTo: "media", // Relasi ke koleksi Media
+      name: "products",
+      type: "join",
+      collection: "products",
+      on: "store",
+      required: true,
     },
   ],
 };
