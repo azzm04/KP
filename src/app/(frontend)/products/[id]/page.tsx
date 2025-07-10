@@ -1,6 +1,7 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import Image from "next/image";
+import Link from "next/link";
 
 function renderRichText(description: any) {
   if (!description) return null;
@@ -27,7 +28,13 @@ export default async function ProductDetailPage(props: { params: { id: string } 
 
   return (
     <div className="container mx-auto p-5 flex justify-center items-center min-h-screen">
-      <div className="max-w-2xl w-full bg-white rounded-lg shadow-md p-6">
+      <div className="max-w-2xl w-full bg-white rounded-lg shadow-md p-6 relative">
+        <Link
+          href="/"
+          className="absolute right-8 top-8 bg-gray-300 text-gray-800 py-2 px-4 rounded-[9px] hover:bg-gray-400 transition-colors duration-200"
+        >
+          Back
+        </Link>
         {product.images && typeof product.images === "object" && product.images.url && (
           <Image
             src={product.images.url}
@@ -47,7 +54,7 @@ export default async function ProductDetailPage(props: { params: { id: string } 
             <div className="text-sm text-gray-500">Stock: {product.stock}</div>
           </div>
           <div className="md:self-start w-full md:w-auto">
-            <button className="bg-gray-500 text-white py-2 px-6 rounded-full w-full md:w-auto cursor-pointer hover:bg-gray-600 transition-colors duration-200">
+            <button className="bg-gray-300 text-gray-800 py-2 px-6 rounded-full w-full md:w-auto cursor-pointer hover:bg-gray-400 transition-colors duration-200">
               Check Out
             </button>
           </div>
