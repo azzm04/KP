@@ -30,6 +30,7 @@ export const Products: CollectionConfig = {
       name: "slug",
       type: "text",
       required: true,
+      unique: true,
       hooks: {
         beforeChange: [generateSlug],
       },
@@ -37,6 +38,7 @@ export const Products: CollectionConfig = {
     {
       name: "description",
       type: "richText",
+      required: true,
     },
     {
       name: "price",

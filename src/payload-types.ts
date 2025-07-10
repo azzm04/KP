@@ -211,7 +211,7 @@ export interface Product {
   id: string;
   name: string;
   slug: string;
-  description?: {
+  description: {
     root: {
       type: string;
       children: {
@@ -225,7 +225,7 @@ export interface Product {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   /**
    * Masukkan harga dalam Rupiah tanpa titik atau koma.
    */
