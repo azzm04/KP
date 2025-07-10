@@ -15,7 +15,7 @@ function renderRichText(description: any) {
 
 export default async function ProductDetailPage(props: { params: { id: string } }) {
   const payload = await getPayload({ config });
-  const { id } = props.params;
+  const { id } = await props.params;
   const product = await payload.findByID({
     collection: "products",
     id: id,

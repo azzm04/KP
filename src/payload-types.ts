@@ -210,6 +210,7 @@ export interface Store {
 export interface Product {
   id: string;
   name: string;
+  slug: string;
   description?: {
     root: {
       type: string;
@@ -414,6 +415,7 @@ export interface StoresSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   description?: T;
   price?: T;
   stock?: T;
