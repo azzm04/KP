@@ -28,7 +28,6 @@ export default async function ProductsListPage() {
           </Link>
         ))}
       </div>
-      
     </div>
   );
 }

@@ -31,9 +31,9 @@ export default async function ProductDetailPage(props: { params: { id: string } 
       <div className="max-w-2xl w-full bg-white rounded-lg shadow-md p-6 relative">
         <Link
           href="/"
-          className="absolute right-8 top-8 bg-gray-300 text-gray-800 py-2 px-4 rounded-[9px] hover:bg-gray-400 transition-colors duration-200"
+          className="absolute w-auto right-8 top-8 bg-gray-100 text-gray-800 py-2 px-4 rounded-[9px] hover:bg-gray-400 transition-colors duration-200"
         >
-          Back
+          <i className="ri-arrow-go-back-fill text-xl"></i>
         </Link>
         {product.images && typeof product.images === "object" && product.images.url && (
           <Image
@@ -54,9 +54,13 @@ export default async function ProductDetailPage(props: { params: { id: string } 
             <div className="text-sm text-gray-500">Stock: {product.stock}</div>
           </div>
           <div className="md:self-start w-full md:w-auto">
-            <button className="bg-gray-300 text-gray-800 py-2 px-6 rounded-full w-full md:w-auto cursor-pointer hover:bg-gray-400 transition-colors duration-200">
+            <Link
+              href="/checkout"
+              className="bg-gray-300 text-gray-800 py-2 px-6 rounded-full w-full md:w-auto cursor-pointer hover:bg-gray-400 transition-colors duration-200"
+            >
+              <i className="ri-shopping-cart-2-line text-xl"></i>
               Check Out
-            </button>
+            </Link>
           </div>
         </div>
       </div>
