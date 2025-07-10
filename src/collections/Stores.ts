@@ -29,7 +29,7 @@ export const Stores: CollectionConfig = {
     },
     {
       name: "description",
-      type: "textarea",
+      type: "richText",
     },
     {
       name: "products",
