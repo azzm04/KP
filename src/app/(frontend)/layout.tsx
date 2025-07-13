@@ -30,7 +30,7 @@ const demoData = {
           title: "Terms of Service",
           description: "Our terms and conditions for using our services",
           icon: <Book className="size-5 shrink-0" />,
-          url: "/terms",
+          url: "/terms-of-service",
         },
       ],
     },
@@ -62,7 +62,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        {/* Tambahkan baris ini */}
         <link
           href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
           rel="stylesheet"

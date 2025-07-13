@@ -11,15 +11,18 @@ export const LogoutUser = ({ user }: { user: User }) => {
   return (
     <>
       <p>{user.email}</p>
-      <Button
-        className="cursor-pointer"
-        onClick={async () => {
-          await logoutUser();
-          router.replace("/auth/login");
-        }}
-      >
-        Log Out
-      </Button>
+      <div className="mx-auto flex items-center">
+        <Button
+          className="text-sm text-black hover:text-muted-foreground bg-white"
+          variant="outline"
+          onClick={async () => {
+            await logoutUser();
+            router.replace("/auth/login");
+          }}
+        >
+          Log Out
+        </Button>
+      </div>
     </>
   );
 };

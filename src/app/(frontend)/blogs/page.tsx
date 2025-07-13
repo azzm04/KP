@@ -29,7 +29,7 @@ const BlogPage = async () => {
     <div className="container mx-auto py-8 px-4">
       <div className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight">Blog</h1>
-        <p className="text-muted-foreground">Artikel dan informasi terbaru dari kami.</p>
+        <p className="text-muted-foreground">Latest articles and updates from us.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

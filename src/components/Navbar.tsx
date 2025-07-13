@@ -76,7 +76,7 @@ const Navbar = ({
           title: "Terms of Service",
           description: "Our terms and conditions for using our services",
           icon: <Book className="size-5 shrink-0" />,
-          url: "#",
+          url: "/terms-of-service",
         },
       ],
     },

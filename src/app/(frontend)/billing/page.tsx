@@ -1,11 +1,18 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { TransactionTable } from "@/components/TransactionTable";
+import { authorizeUser } from "@/lib/actions/authorize-user";
+import { redirect } from "next/navigation";
 
-const BillingPage = async () => {
-  const payload = await getPayload({
-    config,
-  });
+export default async function BillingPage() {
+  const user = await authorizeUser();
+
+  if (!user) {
+    redirect("/auth/login");
+  }
+
+  const payload = await getPayload({ config });
+
   const { docs: transactions } = await payload.find({
     collection: "transactions",
     depth: 2,
@@ -22,6 +29,4 @@ const BillingPage = async () => {
       <TransactionTable transactions={transactions} />
     </div>
   );
-};
-
-export default BillingPage;
+}
