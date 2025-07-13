@@ -8,6 +8,7 @@ import { createMidtransTransaction } from "@/lib/actions/create-midtrans-transac
 import { Heart, RotateCcw, Share2, Shield, ShoppingCart, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
+import Link from "next/link";
 
 interface ProductPageProps {
   name: string;
@@ -56,24 +57,6 @@ export default function ProductPage({
               </Button>
             </div>
           </div>
-
-          {/* Thumbnail images placeholder */}
-          <div className="hidden sm:flex gap-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="w-20 h-20 rounded-lg bg-gray-200 border-2 border-transparent hover:border-primary cursor-pointer transition-colors"
-              >
-                <Image
-                  src={`/placeholder.svg?height=80&width=80`}
-                  alt={`${name} view ${i}`}
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Product Details Section */}
@@ -81,8 +64,9 @@ export default function ProductPage({
           {/* Header */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Badge variant="secondary">New Arrival</Badge>
-              <Badge variant="outline">Free Shipping</Badge>
+              <Button className=" " variant="outline" asChild>
+                <Link href="/">← Back to Home</Link>
+              </Button>
             </div>
 
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">{name}</h1>
