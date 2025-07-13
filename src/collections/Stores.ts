@@ -4,7 +4,7 @@ export const Stores: CollectionConfig = {
   slug: "stores",
   admin: {
     useAsTitle: "store_name",
-    defaultColumns: ["store_name", "owner", "createdAt"],
+    defaultColumns: ["store_name", "owner", "publishedAt"],
   },
   fields: [
     {

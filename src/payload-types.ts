@@ -295,9 +295,9 @@ export interface Transaction {
 export interface Blog {
   id: string;
   title: string;
+  slug: string;
   author: string | User;
   publishedDate: string;
-  category: string | Store;
   /**
    * Perkiraan waktu baca dalam menit.
    */
@@ -513,9 +513,9 @@ export interface TransactionsSelect<T extends boolean = true> {
  */
 export interface BlogsSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   author?: T;
   publishedDate?: T;
-  category?: T;
   readingTime?: T;
   featuredImage?: T;
   content?: T;

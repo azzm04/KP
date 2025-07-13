@@ -4,7 +4,7 @@ export const Blogs: CollectionConfig = {
   slug: "blogs",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "category", "author", "publishedDate"],
+    defaultColumns: ["title", "category", "author", "createdAt"],
   },
   fields: [
     {
@@ -12,6 +12,12 @@ export const Blogs: CollectionConfig = {
       label: "Title",
       type: "text",
       required: true,
+    },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
     },
     {
       name: "author",
@@ -34,16 +40,6 @@ export const Blogs: CollectionConfig = {
           pickerAppearance: "dayOnly",
           displayFormat: "d MMM yyyy",
         },
-      },
-    },
-    {
-      name: "category",
-      label: "Category",
-      type: "relationship",
-      relationTo: "stores",
-      required: true,
-      admin: {
-        position: "sidebar",
       },
     },
     {

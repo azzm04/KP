@@ -9,7 +9,7 @@ const demoData = {
     url: "https://www.shadcnblocks.com",
     src: "https://www.shadcnblocks.com/images/block/block-1.svg",
     alt: "blocks for shadcn/ui",
-    title: "Shadcnblocks.com",
+    title: "E-Commerce",
   },
   menu: [
     {
@@ -40,7 +40,7 @@ const demoData = {
     },
     {
       title: "Blog",
-      url: "/blog",
+      url: "/blogs",
     },
   ],
   mobileExtraLinks: [

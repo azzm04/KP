@@ -4,7 +4,6 @@ import PaymentFormDialog from "@/components/PaymentFormDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { createMidtransTransaction } from "@/lib/actions/create-midtrans-transaction";
 import { Heart, RotateCcw, Share2, Shield, ShoppingCart, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
