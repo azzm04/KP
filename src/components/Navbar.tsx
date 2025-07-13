@@ -123,7 +123,7 @@ const Navbar = ({
       ],
     },
     {
-      title: "Pricing",
+      title: "Billing",
       url: "#",
     },
     {

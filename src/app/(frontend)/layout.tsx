@@ -77,8 +77,8 @@ const demoData = {
       ],
     },
     {
-      title: "Pricing",
-      url: "/pricing",
+      title: "Billing",
+      url: "/billing",
     },
     {
       title: "Blog",
