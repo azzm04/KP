@@ -2,77 +2,121 @@ import type { CollectionConfig } from "payload";
 
 export const Transactions: CollectionConfig = {
   slug: "transactions",
-  admin: {
-    useAsTitle: "invoice_number",
-    defaultColumns: ["invoice_number", "customer", "total_amount", "status"],
-  },
   fields: [
     {
-      name: "invoice_number",
+      name: "orderId",
       type: "text",
       required: true,
-      unique: true,
     },
+
     {
-      name: "customer",
+      name: "product",
       type: "relationship",
+      required: true,
+      relationTo: "products",
+    },
+
+    {
+      name: "buyer",
+      type: "relationship",
+      required: true,
       relationTo: "users",
-      required: true,
+      // filterOptions: {
+      //   role: {
+      //     equals: "customer",
+      //   },
+      // },
     },
-    {
-      name: "items",
-      type: "array", // Array untuk menyimpan item yang dibeli
-      fields: [
-        {
-          name: "product",
-          type: "relationship",
-          relationTo: "products",
-        },
-        {
-          name: "product_name", // Snapshot nama produk
-          type: "text",
-          required: true,
-        },
-        {
-          name: "price", // Snapshot harga produk
-          type: "number",
-          required: true,
-        },
-        {
-          name: "quantity",
-          type: "number",
-          required: true,
-        },
-      ],
-    },
-    {
-      name: "total_amount",
-      type: "number",
-      label: "Price (Rp)",
-      required: true,
-      admin: {
-        // Menambahkan properti admin untuk petunjuk tambahan
-        placeholder: "Contoh: 50000",
-        description: "Masukkan harga dalam Rupiah tanpa titik atau koma.",
-      },
-    },
-    {
-      name: "shipping_address",
-      type: "textarea",
-      required: true,
-    },
+
     {
       name: "status",
       type: "select",
       required: true,
       options: [
-        { label: "Pending Payment", value: "pending_payment" },
-        { label: "Paid", value: "paid" },
-        { label: "Shipped", value: "shipped" },
-        { label: "Completed", value: "completed" },
-        { label: "Cancelled", value: "cancelled" },
+        {
+          label: "Authorize",
+          value: "authorize",
+        },
+        {
+          label: "Capture",
+          value: "capture",
+        },
+        {
+          label: "Settlement",
+          value: "settlement",
+        },
+        {
+          label: "Deny",
+          value: "deny",
+        },
+        {
+          label: "Pending",
+          value: "pending",
+        },
+        {
+          label: "Cancel",
+          value: "cancel",
+        },
+        {
+          label: "Refund",
+          value: "refund",
+        },
+        {
+          label: "Partial Refund",
+          value: "partial_refund",
+        },
+        {
+          label: "Chargeback",
+          value: "chargeback",
+        },
+        {
+          label: "Partial Chargeback",
+          value: "partial_chargeback",
+        },
+        {
+          label: "Expire",
+          value: "expire",
+        },
+        {
+          label: "Failure",
+          value: "failure",
+        },
       ],
-      defaultValue: "pending_payment",
+    },
+
+    {
+      name: "paymentLink",
+      type: "text",
+      required: true,
+    },
+
+    {
+      name: "paid",
+      type: "number",
+      required: true,
+    },
+
+    {
+      name: "customerDetails",
+      type: "group",
+      required: true,
+      fields: [
+        {
+          name: "name",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "email",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "phone",
+          type: "text",
+          required: true,
+        },
+      ],
     },
   ],
 };

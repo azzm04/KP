@@ -35,6 +35,7 @@ const Page = async ({ params }: PageProps) => {
       price={product.price}
       imageUrl={typeof product.images === "object" ? (product.images.url ?? "") : ""}
       description={<RichText data={product.description} />}
+      productId={product.id}
     />
   );
 };

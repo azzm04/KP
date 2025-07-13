@@ -14,9 +14,16 @@ interface ProductPageProps {
   price: number;
   imageUrl: string;
   description: ReactNode;
+  productId: string;
 }
 
-export default function ProductPage({ name, price, imageUrl, description }: ProductPageProps) {
+export default function ProductPage({
+  name,
+  price,
+  imageUrl,
+  description,
+  productId,
+}: ProductPageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -142,7 +149,7 @@ export default function ProductPage({ name, price, imageUrl, description }: Prod
                 Add to Cart
               </Button>
 
-              <PaymentFormDialog grossAmount={price} />
+              <PaymentFormDialog grossAmount={price} productId={productId} />
             </div>
 
             <div className="text-center">

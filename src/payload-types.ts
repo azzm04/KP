@@ -260,23 +260,29 @@ export interface Cart {
  */
 export interface Transaction {
   id: string;
-  invoice_number: string;
-  customer: string | User;
-  items?:
-    | {
-        product?: (string | null) | Product;
-        product_name: string;
-        price: number;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Masukkan harga dalam Rupiah tanpa titik atau koma.
-   */
-  total_amount: number;
-  shipping_address: string;
-  status: 'pending_payment' | 'paid' | 'shipped' | 'completed' | 'cancelled';
+  orderId: string;
+  product: string | Product;
+  buyer: string | User;
+  status:
+    | 'authorize'
+    | 'capture'
+    | 'settlement'
+    | 'deny'
+    | 'pending'
+    | 'cancel'
+    | 'refund'
+    | 'partial_refund'
+    | 'chargeback'
+    | 'partial_chargeback'
+    | 'expire'
+    | 'failure';
+  paymentLink: string;
+  paid: number;
+  customerDetails: {
+    name: string;
+    email: string;
+    phone: string;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -446,20 +452,19 @@ export interface CartsSelect<T extends boolean = true> {
  * via the `definition` "transactions_select".
  */
 export interface TransactionsSelect<T extends boolean = true> {
-  invoice_number?: T;
-  customer?: T;
-  items?:
+  orderId?: T;
+  product?: T;
+  buyer?: T;
+  status?: T;
+  paymentLink?: T;
+  paid?: T;
+  customerDetails?:
     | T
     | {
-        product?: T;
-        product_name?: T;
-        price?: T;
-        quantity?: T;
-        id?: T;
+        name?: T;
+        email?: T;
+        phone?: T;
       };
-  total_amount?: T;
-  shipping_address?: T;
-  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

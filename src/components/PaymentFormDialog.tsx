@@ -23,7 +23,7 @@ interface FormData {
   fullAddress: string;
 }
 
-export default function PaymentFormDialog(props: { grossAmount: number }) {
+export default function PaymentFormDialog(props: { grossAmount: number; productId: string }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -55,12 +55,15 @@ export default function PaymentFormDialog(props: { grossAmount: number }) {
       formData.fullName,
       formData.email,
       formData.fullAddress,
+      props.productId,
     );
 
-    console.log(transaction);
+    if (typeof transaction === "object") {
+      console.log(transaction);
 
-    // @ts-expect-error
-    window.open(transaction.redirect_url, "_self");
+      // @ts-expect-error
+      window.open(transaction.redirect_url, "_self");
+    }
   };
 
   return (
