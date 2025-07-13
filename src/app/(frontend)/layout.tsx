@@ -6,7 +6,7 @@ import { authorizeUser } from "@/lib/actions/authorize-user";
 
 const demoData = {
   logo: {
-    url: "https://www.shadcnblocks.com",
+    url: "/",
     src: "https://www.shadcnblocks.com/images/block/block-1.svg",
     alt: "blocks for shadcn/ui",
     title: "E-Commerce",
