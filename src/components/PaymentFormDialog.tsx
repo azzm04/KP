@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { createMidtransTransaction } from "@/lib/actions/create-midtrans-transaction";
 
 interface FormData {
   email: string;
@@ -22,7 +23,7 @@ interface FormData {
   fullAddress: string;
 }
 
-export default function PaymentFormDialog() {
+export default function PaymentFormDialog(props: { grossAmount: number }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -38,7 +39,7 @@ export default function PaymentFormDialog() {
     }));
   };
 
-  const handleProceedToPayment = () => {
+  const handleProceedToPayment = async () => {
     console.log("User Information:", formData);
     setOpen(false);
     // Reset form after logging
@@ -48,6 +49,18 @@ export default function PaymentFormDialog() {
       phoneNumber: "",
       fullAddress: "",
     });
+
+    const transaction = await createMidtransTransaction(
+      props.grossAmount,
+      formData.fullName,
+      formData.email,
+      formData.fullAddress,
+    );
+
+    console.log(transaction);
+
+    // @ts-expect-error
+    window.open(transaction.redirect_url, "_self");
   };
 
   return (

@@ -1,44 +1,24 @@
 "use client";
 
-import Image from "next/image";
-import { Star, Heart, Share2, ShoppingCart, Shield, Truck, RotateCcw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import React from "react";
 import PaymentFormDialog from "@/components/PaymentFormDialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { createMidtransTransaction } from "@/lib/actions/create-midtrans-transaction";
-import { useRouter } from "next/navigation";
+import { Heart, RotateCcw, Share2, Shield, ShoppingCart, Star, Truck } from "lucide-react";
+import Image from "next/image";
+import { ReactNode } from "react";
 
 interface ProductPageProps {
   name: string;
   price: number;
   imageUrl: string;
-  description: React.ReactNode;
+  description: ReactNode;
 }
 
 export default function ProductPage({ name, price, imageUrl, description }: ProductPageProps) {
-  const router = useRouter();
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Button
-        onClick={async () => {
-          const transaction = await createMidtransTransaction(
-            10_000,
-            "Reyhan",
-            "reyhan@gmail.com",
-            "+628724783",
-          );
-
-          console.log(transaction);
-
-          // @ts-expect-error
-          window.open(transaction.redirect_url, "_self");
-        }}
-      >
-        Test Midtrans function
-      </Button>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Product Image Section */}
         <div className="space-y-4">
@@ -162,7 +142,7 @@ export default function ProductPage({ name, price, imageUrl, description }: Prod
                 Add to Cart
               </Button>
 
-              <PaymentFormDialog />
+              <PaymentFormDialog grossAmount={price} />
             </div>
 
             <div className="text-center">
