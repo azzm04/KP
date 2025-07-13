@@ -16,7 +16,7 @@ export default function ProductCard({
   name,
   price = 0,
   stock,
-  currency = "$",
+  currency = "IDR",
   imageAlt,
 }: ProductCardProps) {
   const getStockStatus = () => {

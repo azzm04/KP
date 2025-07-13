@@ -86,9 +86,11 @@ export default function ProductPage({
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-gray-900">${price.toFixed(2)}</span>
+              <span className="text-4xl font-bold text-gray-900">
+                IDR{(price || 0).toLocaleString()}
+              </span>
               <span className="text-xl text-gray-500 line-through">
-                ${(price * 1.2).toFixed(2)}
+                IDR{(price * 1.2).toLocaleString()}
               </span>
               <Badge variant="destructive">20% OFF</Badge>
             </div>
