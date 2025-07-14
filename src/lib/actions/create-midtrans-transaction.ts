@@ -46,7 +46,7 @@ export const createMidtransTransaction = async (
       phone: phone,
     },
     callbacks: {
-      finish: thanktopayment,
+      finish: "https://e-commerce-navy-psi-43.vercel.app",
     },
   };
 
