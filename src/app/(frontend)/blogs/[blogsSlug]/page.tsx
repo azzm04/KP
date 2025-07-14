@@ -5,19 +5,20 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import BlogPage from "@/components/BlogPage";
 
 interface BlogDetailPageProps {
-  params: {
+  params: Promise<{
     blogsSlug: string;
-  };
+  }>;
 }
 
 const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
   const payload = await getPayload({ config });
 
+  const { blogsSlug } = await params;
   const { docs } = await payload.find({
     collection: "blogs",
     where: {
       slug: {
-        equals: params.blogsSlug,
+        equals: blogsSlug,
       },
     },
     depth: 5,

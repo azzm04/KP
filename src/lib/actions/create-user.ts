@@ -14,6 +14,8 @@ export const createUser = async (name: string, email: string, password: string) 
         name,
         email,
         password,
+        phoneNumber: "",
+        address: "",
         role: "customer", // default role
       },
     });

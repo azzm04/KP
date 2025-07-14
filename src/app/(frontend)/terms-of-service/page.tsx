@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
               <h2 className="text-2xl font-semibold">2. Changes to Terms</h2>
               <p className="text-muted-foreground">
                 We reserve the right to modify or replace these Terms at any time. If a revision is
-                material, we will provide at least 30 days' notice prior to any new terms taking
+                material, we will provide at least 30 days notice prior to any new terms taking
                 effect. What constitutes a material change will be determined at our sole
                 discretion.
               </p>
