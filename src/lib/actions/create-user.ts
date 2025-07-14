@@ -4,7 +4,13 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 
 // Remote Procedure Call (RPC)
-export const createUser = async (name: string, email: string, password: string) => {
+export const createUser = async (
+  name: string,
+  email: string,
+  password: string,
+  phoneNumber: string,
+  address: string,
+) => {
   const payload = await getPayload({ config });
 
   try {
@@ -14,33 +20,34 @@ export const createUser = async (name: string, email: string, password: string) 
         name,
         email,
         password,
-        phoneNumber: "",
-        address: "",
-        role: "customer", // default role
+        phoneNumber,
+        address,
+        role: "customer",
       },
     });
+
     return {
       success: true,
       message: "Account created successfully!",
       data: {
         fullname: name,
         email,
+        password,
+        phoneNumber,
+        address,
         passwordLength: password.length,
       },
     };
   } catch (err: any) {
-    let message = "Failed to create account.";
-    if (err?.data?.errors?.[0]?.message) {
-      message = err.data.errors[0].message;
-    } else if (err?.message) {
-      message = err.message;
-    }
     return {
       success: false,
-      message,
+      message: "Failed to create account.",
       data: {
         fullname: name,
         email,
+        password,
+        phoneNumber,
+        address,
         passwordLength: password.length,
       },
     };

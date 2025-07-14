@@ -1,21 +1,23 @@
 "use client";
 
-import type React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { CheckCircle, Loader2 } from "lucide-react";
 
-import { useState } from "react";
+import { createUser } from "@/lib/actions/create-user";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle, Loader2 } from "lucide-react";
-import { createUser } from "@/lib/actions/create-user";
-import { useRouter } from "next/navigation";
 
 interface FormData {
   fullname: string;
   email: string;
   password: string;
+  phoneNumber: string;
+  address: string;
 }
 
 interface SubmissionResult {
@@ -31,12 +33,20 @@ export default function RegistrationForm() {
     fullname: "",
     email: "",
     password: "",
+    phoneNumber: "",
+    address: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<SubmissionResult | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === "phoneNumber" && /\D/.test(value)) {
+      return; // abaikan jika ada non-digit
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -48,13 +58,20 @@ export default function RegistrationForm() {
     setIsSubmitting(true);
     setResult(null);
 
-    const res = await createUser(formData.fullname, formData.email, formData.password);
+    const res = await createUser(
+      formData.fullname,
+      formData.email,
+      formData.password,
+      formData.phoneNumber,
+      formData.address,
+    );
 
-    console.log(res);
-
+    setResult(res);
     setIsSubmitting(false);
 
-    router.replace("/");
+    if (res?.success) {
+      router.replace("/");
+    }
   };
 
   return (
@@ -87,7 +104,7 @@ export default function RegistrationForm() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="Example@gmail.com"
+                placeholder="example@gmail.com"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
@@ -107,7 +124,36 @@ export default function RegistrationForm() {
                 disabled={isSubmitting}
               />
             </div>
-            <Button type="submit" className="w-full cursor-pointer" disabled={isSubmitting}>
+            <div className="space-y-2">
+              <Label htmlFor="phoneNumber">Phone Number</Label>
+              <Input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                placeholder="08xxxxxxxxxx"
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
+                required
+                disabled={isSubmitting}
+                pattern="\d*"
+                inputMode="numeric"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <Input
+                id="address"
+                name="address"
+                type="text"
+                placeholder="Jl. Contoh No. 123"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+                disabled={isSubmitting}
+              />
+            </div>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
