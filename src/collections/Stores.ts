@@ -4,7 +4,7 @@ export const Stores: CollectionConfig = {
   slug: "stores",
   admin: {
     useAsTitle: "store_name",
-    defaultColumns: ["store_name", "owner", "createdAt"],
+    defaultColumns: ["store_name", "owner", "publishedAt"],
   },
   fields: [
     {
@@ -26,19 +26,17 @@ export const Stores: CollectionConfig = {
           equals: "seller",
         },
       },
-      admin: {
-        condition: ({ role }) => role === "seller",
-      },
     },
     {
       name: "description",
-      type: "textarea",
+      type: "richText",
     },
     {
-      name: "logo",
-      label: "Store Logo",
-      type: "upload", // Menggunakan koleksi media
-      relationTo: "media", // Relasi ke koleksi Media
+      name: "products",
+      type: "join",
+      collection: "products",
+      on: "store",
+      required: true,
     },
   ],
 };

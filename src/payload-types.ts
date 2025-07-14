@@ -73,11 +73,16 @@ export interface Config {
     products: Product;
     carts: Cart;
     transactions: Transaction;
+    blogs: Blog;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    stores: {
+      products: 'products';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -85,6 +90,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     carts: CartsSelect<false> | CartsSelect<true>;
     transactions: TransactionsSelect<false> | TransactionsSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -128,9 +134,15 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name: string;
-  role: 'customer' | 'seller';
-  phone_number?: string | null;
-  address?: string | null;
+  role: 'customer' | 'seller' | 'admin';
+  phoneNumber: string;
+  address: string;
+  wishlist?:
+    | {
+        product: string | Product;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -151,6 +163,71 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Masukkan harga dalam Rupiah tanpa titik atau koma.
+   */
+  price: number;
+  stock: number;
+  category?: string | null;
+  store: string | Store;
+  images: string | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stores".
+ */
+export interface Store {
+  id: string;
+  store_name: string;
+  owner: string | User;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  products: {
+    docs?: (string | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -167,52 +244,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stores".
- */
-export interface Store {
-  id: string;
-  store_name: string;
-  owner?: (string | null) | User;
-  description?: string | null;
-  logo?: (string | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: string;
-  name: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Masukkan harga dalam Rupiah tanpa titik atau koma.
-   */
-  price: number;
-  stock: number;
-  category?: string | null;
-  images?: (string | Media)[] | null;
-  store: string | Store;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -237,23 +268,62 @@ export interface Cart {
  */
 export interface Transaction {
   id: string;
-  invoice_number: string;
-  customer: string | User;
-  items?:
-    | {
-        product?: (string | null) | Product;
-        product_name: string;
-        price: number;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
+  orderId: string;
+  product: string | Product;
+  buyer: string | User;
+  status:
+    | 'authorize'
+    | 'capture'
+    | 'settlement'
+    | 'deny'
+    | 'pending'
+    | 'cancel'
+    | 'refund'
+    | 'partial_refund'
+    | 'chargeback'
+    | 'partial_chargeback'
+    | 'expire'
+    | 'failure';
+  paymentLink: string;
+  paid: number;
+  customerDetails: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  author: string | User;
+  publishedDate: string;
   /**
-   * Masukkan harga dalam Rupiah tanpa titik atau koma.
+   * Perkiraan waktu baca dalam menit.
    */
-  total_amount: number;
-  shipping_address: string;
-  status: 'pending_payment' | 'paid' | 'shipped' | 'completed' | 'cancelled';
+  readingTime?: number | null;
+  featuredImage: string | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -287,6 +357,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'transactions';
         value: string | Transaction;
+      } | null)
+    | ({
+        relationTo: 'blogs';
+        value: string | Blog;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -337,8 +411,14 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
-  phone_number?: T;
+  phoneNumber?: T;
   address?: T;
+  wishlist?:
+    | T
+    | {
+        product?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -382,7 +462,7 @@ export interface StoresSelect<T extends boolean = true> {
   store_name?: T;
   owner?: T;
   description?: T;
-  logo?: T;
+  products?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -392,12 +472,13 @@ export interface StoresSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   description?: T;
   price?: T;
   stock?: T;
   category?: T;
-  images?: T;
   store?: T;
+  images?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -422,20 +503,34 @@ export interface CartsSelect<T extends boolean = true> {
  * via the `definition` "transactions_select".
  */
 export interface TransactionsSelect<T extends boolean = true> {
-  invoice_number?: T;
-  customer?: T;
-  items?:
+  orderId?: T;
+  product?: T;
+  buyer?: T;
+  status?: T;
+  paymentLink?: T;
+  paid?: T;
+  customerDetails?:
     | T
     | {
-        product?: T;
-        product_name?: T;
-        price?: T;
-        quantity?: T;
-        id?: T;
+        name?: T;
+        email?: T;
+        phone?: T;
       };
-  total_amount?: T;
-  shipping_address?: T;
-  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  author?: T;
+  publishedDate?: T;
+  readingTime?: T;
+  featuredImage?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
 }

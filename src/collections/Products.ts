@@ -1,4 +1,17 @@
-import type { CollectionConfig } from "payload";
+import { Product } from "@/payload-types";
+import type { CollectionConfig, Field, FieldHook } from "payload";
+
+const generateSlug: FieldHook<Product, string, Product> = ({ data }) => {
+  const name = data?.name;
+
+  if (name) {
+    const slug = name.toLowerCase().split(" ").join("-");
+
+    return slug;
+  }
+
+  return data?.id ?? (Math.random() * 2_000).toString();
+};
 
 export const Products: CollectionConfig = {
   slug: "products",
@@ -14,8 +27,18 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      hooks: {
+        beforeChange: [generateSlug],
+      },
+    },
+    {
       name: "description",
-      type: "richText", // Rich text editor untuk deskripsi yang lebih detail
+      type: "richText",
+      required: true,
     },
     {
       name: "price",
@@ -24,7 +47,6 @@ export const Products: CollectionConfig = {
       required: true,
       min: 0,
       admin: {
-        // Menambahkan properti admin untuk petunjuk tambahan
         placeholder: "Contoh: 50000",
         description: "Masukkan harga dalam Rupiah tanpa titik atau koma.",
       },
@@ -42,19 +64,19 @@ export const Products: CollectionConfig = {
       type: "text",
     },
     {
-      name: "images",
-      label: "Product Images",
-      type: "relationship",
-      relationTo: "media",
-      hasMany: true, // Memungkinkan memilih banyak gambar
-    },
-    {
       name: "store",
       label: "Store",
       type: "relationship",
       relationTo: "stores", // Relasi ke koleksi Stores
       required: true,
       hasMany: false,
+    },
+    {
+      name: "images",
+      label: "Product Images",
+      type: "upload",
+      relationTo: "media", // Relasi ke koleksi Media
+      required: true,
     },
   ],
 };

@@ -121,3 +121,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media (max-width: 768px) {
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-right: 0.5rem;
+    color: #111827; 
+  }
+}
