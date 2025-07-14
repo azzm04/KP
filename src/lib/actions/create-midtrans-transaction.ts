@@ -44,7 +44,7 @@ export const createMidtransTransaction = async (
       phone: phone,
     },
     callbacks: {
-      finish: process.env.PAGE_THANKS_TO_PAYMENT,
+      finish: "process.env.PAGE_THANKS_TO_PAYMENT",
     },
   };
 
