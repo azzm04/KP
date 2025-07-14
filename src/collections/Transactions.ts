@@ -2,6 +2,74 @@ import type { CollectionConfig } from "payload";
 
 export const Transactions: CollectionConfig = {
   slug: "transactions",
+
+  access: {
+    // Role based access control
+    create: (args) => {
+      return true;
+    },
+    read: (args) => {
+      const {
+        req: { user },
+      } = args;
+
+      if (!user) {
+        return false;
+      }
+
+      // Return boolean atau query object
+      // return {
+      //   "buyer.id": {
+      //     equals: user.id,
+      //   },
+      // };
+
+      // return true;
+
+      if (user && user.role === "admin") {
+        return true;
+      }
+
+      return {
+        "buyer.id": {
+          equals: user.id,
+        },
+      };
+    },
+    update: (args) => {
+      const {
+        req: { user },
+      } = args;
+
+      if (user && user.role === "seller") {
+        return true;
+      }
+
+      return {
+        "buyer.id": {
+          equals: user?.id,
+        },
+      };
+    },
+    delete: (args) => {
+      const {
+        req: { user },
+      } = args;
+
+      if (user && user.role === "admin") {
+        return true;
+      }
+
+      return {
+        "buyer.id": {
+          equals: user?.id,
+        },
+      };
+    },
+  },
+
+  // TODO show field access control
+  // TODO show why in UI is still all members
   fields: [
     {
       name: "orderId",

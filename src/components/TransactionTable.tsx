@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface Transaction {
   id: string;
@@ -18,6 +20,7 @@ interface Transaction {
   buyer: { name: string; email?: string } | string;
   status: string;
   paid: number;
+  paymentLink: string;
 }
 
 const formatRupiah = (number: any) => {
@@ -36,12 +39,13 @@ export function TransactionTable({ transactions }: { transactions: Transaction[]
           {/* Header ini akan disembunyikan di mobile (layar < 768px) */}
           <TableHeader className="hidden md:table-header-group">
             <TableRow className="border-gray-200 bg-gray-50">
-              <TableHead>ID</TableHead>
+              {/* <TableHead>ID</TableHead> */}
               <TableHead>Order ID</TableHead>
               <TableHead>Product</TableHead>
-              <TableHead>Buyer</TableHead>
+              {/* <TableHead>Buyer</TableHead> */}
               <TableHead>Status</TableHead>
               <TableHead>Paid</TableHead>
+              <TableHead>Payment Link</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -53,21 +57,21 @@ export function TransactionTable({ transactions }: { transactions: Transaction[]
                 // Di desktop, akan kembali menjadi table-row
                 className="grid grid-cols-2 gap-x-2 gap-y-3 p-4 border-b border-gray-200 md:table-row md:p-0 md:gap-0"
               >
-                <TableCell
+                {/* <TableCell
                   data-label="ID"
                   className="text-gray-900 font-mono text-sm md:table-cell"
                 >
                   {t.id}
-                </TableCell>
+                </TableCell> */}
                 <TableCell data-label="Order ID" className="text-gray-900 md:table-cell">
                   {t.orderId}
                 </TableCell>
                 <TableCell data-label="Product" className="text-gray-900 md:table-cell">
                   {typeof t.product === "object" ? t.product.name : t.product}
                 </TableCell>
-                <TableCell data-label="Buyer" className="text-gray-900 md:table-cell">
+                {/* <TableCell data-label="Buyer" className="text-gray-900 md:table-cell">
                   {typeof t.buyer === "object" ? t.buyer.name : t.buyer}
-                </TableCell>
+                </TableCell> */}
                 <TableCell data-label="Status" className="md:table-cell">
                   <Badge
                     variant="outline"
@@ -86,11 +90,20 @@ export function TransactionTable({ transactions }: { transactions: Transaction[]
                   {/* Menggunakan fungsi formatRupiah */}
                   {formatRupiah(t.paid)}
                 </TableCell>
+                <TableCell
+                  data-label="Payment Link"
+                  className="text-gray-900 font-semibold md:table-cell"
+                >
+                  <Link href={t.status === "pending" ? t.paymentLink : ""}>
+                    <Button disabled={t.status !== "pending"}>Pay Now</Button>
+                  </Link>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </Card>
+         
     </div>
   );
 }

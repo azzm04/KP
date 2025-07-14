@@ -18,6 +18,8 @@ export default async function BillingPage() {
     depth: 2,
     sort: "-updatedAt",
     limit: 50,
+    overrideAccess: false,
+    user: user,
   });
 
   return (
