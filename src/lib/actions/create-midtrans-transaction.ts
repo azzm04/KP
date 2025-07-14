@@ -29,6 +29,7 @@ export const createMidtransTransaction = async (
 
   const orderId = nanoid();
 
+  const finishpayment = "https://e-commerce-navy-psi-43.vercel.app/processing-payment";
   const parameter = {
     transaction_details: {
       order_id: orderId,
@@ -44,7 +45,7 @@ export const createMidtransTransaction = async (
       phone: phone,
     },
     callbacks: {
-      finish: "https://e-commerce-navy-psi-43.vercel.app/processing-payment",
+      finish: finishpayment,
     },
   };
 
