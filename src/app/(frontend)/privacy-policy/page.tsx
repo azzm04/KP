@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
                 </li>
                 <li>
                   <span className="font-medium">Usage Data:</span> Information on how the Service is
-                  accessed and used, including your computer's Internet Protocol address (e.g., IP
+                  accessed and used, including your computers Internet Protocol address (e.g., IP
                   address), browser type, browser version, the pages of our Service that you visit,
                   the time and date of your visit, the time spent on those pages, unique device
                   identifiers and other diagnostic data.

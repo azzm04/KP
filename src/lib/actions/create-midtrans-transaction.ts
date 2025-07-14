@@ -21,7 +21,7 @@ export const createMidtransTransaction = async (
   }
 
   // Create Snap API instance
-  let snap = new midtransClient.Snap({
+  const snap = new midtransClient.Snap({
     // Set to true if you want Production Environment (accept real transaction).
     isProduction: false,
     serverKey: process.env.MIDTRANS_SERVER_KEY,
@@ -29,7 +29,7 @@ export const createMidtransTransaction = async (
 
   const orderId = nanoid();
 
-  let parameter = {
+  const parameter = {
     transaction_details: {
       order_id: orderId,
       gross_amount: grossAmount,
